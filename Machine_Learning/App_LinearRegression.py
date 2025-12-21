@@ -13,19 +13,16 @@ from sklearn.linear_model import LinearRegression
 st.set_page_config(page_title="Linear Regression", layout="centered")
 
 # --------------------------------------------------
-# Load CSS
+# Load CSS (WORKING METHOD)
 # --------------------------------------------------
-import os
-
-def load_css(file):
-    css_path = os.path.join(os.path.dirname(__file__), file)
+def load_css():
     try:
-        with open(css_path) as f:
+        with open("style.css") as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
     except FileNotFoundError:
-        st.warning("⚠️ style.css not found")
+        st.error("❌ style.css not found. Keep it in same folder as app.py")
 
-load_css("style.css")
+load_css()
 
 # --------------------------------------------------
 # Title
@@ -34,7 +31,7 @@ st.markdown(
     """
     <div class="card">
         <h1>Linear Regression</h1>
-        <p>Predict <b>Tip Amount</b> from <b>Total Bill</b> using Linear Regression</p>
+        <p>Predict <b>Tip Amount</b> from <b>Total Bill</b></p>
     </div>
     """,
     unsafe_allow_html=True
@@ -50,7 +47,7 @@ def load_data():
 df = load_data()
 
 # --------------------------------------------------
-# Dataset preview
+# Dataset Preview
 # --------------------------------------------------
 st.markdown('<div class="card">', unsafe_allow_html=True)
 st.subheader("Dataset Preview")
@@ -119,7 +116,7 @@ c3.metric("R²", f"{r2:.2f}")
 st.markdown('</div>', unsafe_allow_html=True)
 
 # --------------------------------------------------
-# Model interpretation
+# Model Interpretation
 # --------------------------------------------------
 st.markdown(
     f"""
@@ -141,9 +138,9 @@ st.markdown('<div class="card">', unsafe_allow_html=True)
 
 bill = st.slider(
     "Enter Total Bill ($)",
-    min_value=float(df["total_bill"].min()),
-    max_value=float(df["total_bill"].max()),
-    value=30.0
+    float(df["total_bill"].min()),
+    float(df["total_bill"].max()),
+    30.0
 )
 
 tip = model.predict(scaler.transform([[bill]]))[0]
@@ -154,4 +151,3 @@ st.markdown(
 )
 
 st.markdown('</div>', unsafe_allow_html=True)
-
