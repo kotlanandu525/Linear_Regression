@@ -15,12 +15,15 @@ st.set_page_config(page_title="Linear Regression", layout="centered")
 # --------------------------------------------------
 # Load CSS
 # --------------------------------------------------
+import os
+
 def load_css(file):
+    css_path = os.path.join(os.path.dirname(__file__), file)
     try:
-        with open(file) as f:
+        with open(css_path) as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
     except FileNotFoundError:
-        pass  # avoids crash during cloud deployment
+        st.warning("⚠️ style.css not found")
 
 load_css("style.css")
 
@@ -151,3 +154,4 @@ st.markdown(
 )
 
 st.markdown('</div>', unsafe_allow_html=True)
+
