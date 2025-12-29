@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.linear_model import LinearRegression
-
+import os
 # --------------------------------------------------
 # Page config
 # --------------------------------------------------
@@ -15,14 +15,12 @@ st.set_page_config(page_title="Linear Regression", layout="centered")
 # --------------------------------------------------
 # Load CSS (WORKING METHOD)
 # --------------------------------------------------
-def load_css():
-    try:
-        with open("style.css") as f:
-            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-    except FileNotFoundError:
-        st.error("❌ style.css not found. Keep it in same folder as app.py")
-
-load_css()
+def load_css(file):
+    base_path = os.path.dirname(__file__)   # directory of app.py
+    css_path = os.path.join(base_path, file)
+    with open(css_path) as f:
+        st.markdown(f"<style>{f.read()}</style>",unsafe_allow_html=True)
+load_css("style.css")
 
 # --------------------------------------------------
 # Title
